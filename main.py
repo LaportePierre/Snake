@@ -7,7 +7,7 @@ def main():
 
 class snake:
     def __init__(self):
-        self.score_win = 10
+        self.score_win = 3072
         self.width = 640
         self.height = 480
         self.screen = pygame.display.set_mode((self.width, self.height))
@@ -124,23 +124,24 @@ class snake:
                 pygame.display.flip()
 
     def reset_game(self, black):
+        self.screen = pygame.display.set_mode((self.width, self.height))
         self.length = 5
-        self.positions = [(self.width // 2, self.height // 2 - i) for i in range(self.length)]
+        self.positions = [(self.width // 2, self.height // 2 - i) for i in range(self.length)]        
         self.direction = (0, -1)
         self.is_key_pressed = False
         self.popup_message = None
-        self.game_running = True
-        self.screen.fill(black)
+        self.fruit_position = self.generate_fruit((0, 255, 0))
         pygame.display.flip()
 
     def generate_fruit(self, green):
         # Génère une position aléatoire pour le fruit qui n'est pas sur le serpent
         while True:
-            x = random.randrange(self.width + 10)
-            y = random.randrange(self.height + 10)
+            x = random.randrange(self.width)
+            y = random.randrange(self.height)
             x = (x // 10) * 10
             y = (y // 10) * 10 
             if (x, y) not in self.positions:
+                print(x, y)
                 pygame.draw.rect(self.screen, green, (x, y, 10, 10))
                 return x, y
 
